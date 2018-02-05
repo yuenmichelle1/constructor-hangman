@@ -56,21 +56,32 @@ var currentWordObj = new Word(
 );
 currentWordObj.displayWord();
 
-inquirer
-  .prompt([
-    {
-      type: "input",
-      message: "Pick a letter",
-      name: "userGuess"
-    }
-  ])
-  .then(function(inquirerResponse) {
-    console.log(`you guessed ${inquirerResponse.userGuess}`);
-    // //check if userGuess is a letter (i.e. not a symbol and not more than length 1)
-    if (
-      inquirerResponse.userGuess.length === 1 &&
-      alphabet.includes(inquirerResponse.userGuess.toUpperCase())
-    ) {
-      currentWordObj.checkGuess(inquirerResponse.userGuess);
-    }
-  });
+function InquireLetter() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Pick a letter",
+        name: "userGuess"
+      }
+    ])
+    .then(function(inquirerResponse) {
+      console.log(`you guessed ${inquirerResponse.userGuess}`);
+      // //check if userGuess is a letter (i.e. not a symbol and not more than length 1)
+      if (
+        inquirerResponse.userGuess.length === 1 &&
+        alphabet.includes(inquirerResponse.userGuess.toUpperCase())
+      ) {
+        currentWordObj.checkGuess(inquirerResponse.userGuess);
+      } else {
+        console.log(
+          `${
+            inquirerResponse.userGuess
+          } is not a valid input. Please guess a letter`
+        );
+        InquireLetter();
+      }
+    });
+}
+
+InquireLetter();
