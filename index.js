@@ -1,5 +1,33 @@
 var Word = require("./Word.js");
 var inquirer = require("inquirer");
+var alphabet = [
+  `A`,
+  `B`,
+  `C`,
+  `D`,
+  `E`,
+  `F`,
+  `G`,
+  `H`,
+  `I`,
+  `J`,
+  `K`,
+  `L`,
+  `M`,
+  `N`,
+  `O`,
+  `P`,
+  `Q`,
+  `R`,
+  `S`,
+  `T`,
+  `U`,
+  `V`,
+  `W`,
+  `X`,
+  `Y`,
+  `Z`
+];
 
 var game = {
   wordBank: [
@@ -28,3 +56,21 @@ var currentWordObj = new Word(
 );
 currentWordObj.displayWord();
 
+inquirer
+  .prompt([
+    {
+      type: "input",
+      message: "Pick a letter",
+      name: "userGuess"
+    }
+  ])
+  .then(function(inquirerResponse) {
+    console.log(`you guessed ${inquirerResponse.userGuess}`);
+    // //check if userGuess is a letter (i.e. not a symbol and not more than length 1)
+    if (
+      inquirerResponse.userGuess.length === 1 &&
+      alphabet.includes(inquirerResponse.userGuess.toUpperCase())
+    ) {
+      currentWordObj.checkGuess(inquirerResponse.userGuess);
+    }
+  });
