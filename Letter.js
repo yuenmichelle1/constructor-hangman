@@ -3,18 +3,16 @@ function Letter(letter, isGuessed) {
   this.isGuessed = isGuessed;
   this.placeholder = function() {
     if (this.isGuessed) {
-      console.log(this.letter);
+      return this.letter;
     } else {
-      console.log(`_`);
+      return `-`;
     }
   };
   this.checkLetter = function(guess) {
     if (guess.toUpperCase() === this.letter) {
       this.isGuessed = true;
     }
-    this.placeholder();
   };
 }
-
 
 module.exports = Letter;
