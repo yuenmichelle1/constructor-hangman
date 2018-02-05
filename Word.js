@@ -1,9 +1,5 @@
 var Letter = require("./Letter.js");
 
-var A = new Letter(`a`, false);
-A.checkLetter("b");
-console.log(A.placeholder());
-
 function Word(word) {
   this.CreateletterObjArr = function() {
     var wordArray = word.split("");
@@ -29,9 +25,8 @@ function Word(word) {
   };
 }
 
-var foo = new Word("Funny");
-console.log(foo.CreateletterObjArr());
+var foo = new Word("Monkey");
 foo.displayWord();
-foo.checkGuess("N");
+foo.checkGuess("u");
 
 module.exports = Word;
