@@ -25,8 +25,8 @@ function Word(word) {
   };
 }
 
-var foo = new Word("Monkey");
-foo.displayWord();
-foo.checkGuess("u");
+// var foo = new Word("Monkey");
+// foo.displayWord();
+// foo.checkGuess("u");
 
 module.exports = Word;

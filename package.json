@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/yuenmichelle1/constructor-hangman/issues"
   },
-  "homepage": "https://github.com/yuenmichelle1/constructor-hangman#readme"
+  "homepage": "https://github.com/yuenmichelle1/constructor-hangman#readme",
+  "dependencies": {
+    "inquirer": "^5.1.0"
+  }
 }
