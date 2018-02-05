@@ -17,17 +17,18 @@ function Word(word) {
     for (var i = 0; i < this.CreateletterObj().length; i++) {
       dashedWord += this.CreateletterObj()[i].placeholder();
     }
-    return dashedWord;
+    console.log(dashedWord);
   };
-//   this.checkGuess = function(guess) {
-//     for (var i = 0; i < this.CreateletterObj().length; i++) {
-//       this.CreateletterObj()[i].letter.checkLetter(guess);
-//     }
-//   };
-
+  this.checkGuess = function(guess) {
+    for (var i = 0; i < this.CreateletterObj().length; i++) {
+      this.CreateletterObj()[i].checkLetter(guess);
+      console.log(this.CreateletterObj()[i].isGuessed);
+    }
+    this.displayWord();
+  };
 }
 
-var foo = new Word("FOO");
+var foo = new Word("foo");
 
-console.log(foo.displayWord());
-
+foo.displayWord();
+foo.checkGuess("F");
