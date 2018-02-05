@@ -84,4 +84,11 @@ function InquireLetter() {
     });
 }
 
+// function keepGuessing() {
+//   while (currentWordObj.displayWord().includes(`-`) || numberOfguesses === 0) {
+//     InquireLetter();
+//   }
+// }
+
+// keepGuessing();
 InquireLetter();

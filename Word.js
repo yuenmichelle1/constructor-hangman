@@ -3,10 +3,7 @@ var Letter = require("./Letter.js");
 function Word(word) {
   this.CreateletterObjArr = function() {
     var wordArray = word.split("");
-    var letterObjArr = [];
-    for (var i = 0; i < wordArray.length; i++) {
-      letterObjArr.push(new Letter(`${wordArray[i]}`, false));
-    }
+    var letterObjArr = wordArray.map((letter) => new Letter (letter, false));
     return letterObjArr;
   };
   this.letterObjArray = this.CreateletterObjArr();
@@ -16,6 +13,7 @@ function Word(word) {
       dashedWord += this.letterObjArray[i].placeholder();
     }
     console.log(dashedWord);
+    return dashedWord;
   };
   this.checkGuess = function(guess) {
     for (var i = 0; i < this.letterObjArray.length; i++) {
@@ -25,8 +23,9 @@ function Word(word) {
   };
 }
 
-// var foo = new Word("Monkey");
+var foo = new Word("Monkey");
 // foo.displayWord();
 // foo.checkGuess("u");
+console.log(foo.CreateletterObjArr());
 
 module.exports = Word;
