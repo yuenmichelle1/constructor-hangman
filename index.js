@@ -31,7 +31,7 @@ var game = {
 };
 
 function InquireLetter(currentWordObj) {
-  if (game.numberOfguesses > 0) {
+  if (game.numberOfguesses > 0 && currentWordObj.displayWord().includes(`_`)) {
     inquirer
       .prompt([
         {
@@ -47,13 +47,12 @@ function InquireLetter(currentWordObj) {
           alphabet.includes(inquirerResponse.userGuess.toUpperCase())
         ) {
           currentWordObj.checkGuess(inquirerResponse.userGuess);
+          InquireLetter(currentWordObj);
         } else {
           console.log(
-            `${
-              inquirerResponse.userGuess
-            } is not a valid input. Please guess a letter`
+            `${inquirerResponse.userGuess} is not a valid input. Please guess a letter`
           );
-          InquireLetter();
+          InquireLetter(currentWordObj);
         }
       });
   }
@@ -70,7 +69,6 @@ function AskThenStart(currentWordObj) {
     ])
     .then(function(inquirerResponse) {
       if (inquirerResponse.Gamestart) {
-        currentWordObj.displayWord();
         InquireLetter(currentWordObj);
       } else {
         console.log(`Let me know when you're ready to play..`);
@@ -79,13 +77,5 @@ function AskThenStart(currentWordObj) {
     });
 }
 
-// function keepGuessing() {
-//   while (currentWordObj.displayWord().includes(`-`) || numberOfguesses === 0) {
-//     InquireLetter();
-//   }
-// }
-
-// keepGuessing();
-// var currentWordObj = new Word(game.wordBank[Math.floor(Math.random() * game.wordBank.length)]);
 
 game.startGame();
