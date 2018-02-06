@@ -1,8 +1,34 @@
 var Word = require("./Word.js");
 var inquirer = require("inquirer");
-var alphabet = [`A`,`B`,`C`, `D`,`E`,`F`,`G`, `H`,`I`,`J`,`K`,`L`,`M`,`N`,`O`,`P`,`Q`,`R`, `S`,`T`,`U`, `V`, `W`,`X`,`Y`,`Z`];
+var alphabet = [
+  `A`,
+  `B`,
+  `C`,
+  `D`,
+  `E`,
+  `F`,
+  `G`,
+  `H`,
+  `I`,
+  `J`,
+  `K`,
+  `L`,
+  `M`,
+  `N`,
+  `O`,
+  `P`,
+  `Q`,
+  `R`,
+  `S`,
+  `T`,
+  `U`,
+  `V`,
+  `W`,
+  `X`,
+  `Y`,
+  `Z`
+];
 
-var currentWordObj = new Word(game.wordBank[Math.floor(Math.random() * game.wordBank.length)]);
 
 var game = {
   wordBank: [
@@ -30,32 +56,35 @@ var game = {
   }
 };
 
+var currentWordObj = new Word(game.wordBank[Math.floor(Math.random() * game.wordBank.length)]);
 
 function InquireLetter() {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "Pick a letter",
-        name: "userGuess"
-      }
-    ])
-    .then(function(inquirerResponse) {
-      console.log(`you guessed ${inquirerResponse.userGuess}`);
-      if (
-        inquirerResponse.userGuess.length === 1 &&
-        alphabet.includes(inquirerResponse.userGuess.toUpperCase())
-      ) {
-        currentWordObj.checkGuess(inquirerResponse.userGuess);
-      } else {
-        console.log(
-          `${
-            inquirerResponse.userGuess
-          } is not a valid input. Please guess a letter`
-        );
-        InquireLetter();
-      }
-    });
+  if (game.numberOfguesses > 0) {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "Pick a letter",
+          name: "userGuess"
+        }
+      ])
+      .then(function(inquirerResponse) {
+        console.log(`you guessed ${inquirerResponse.userGuess}`);
+        if (
+          inquirerResponse.userGuess.length === 1 &&
+          alphabet.includes(inquirerResponse.userGuess.toUpperCase())
+        ) {
+          currentWordObj.checkGuess(inquirerResponse.userGuess);
+        } else {
+          console.log(
+            `${
+              inquirerResponse.userGuess
+            } is not a valid input. Please guess a letter`
+          );
+          InquireLetter();
+        }
+      });
+  }
 }
 
 function AskThenStart() {
