@@ -52,13 +52,12 @@ var game = {
   wrongGuesses: [],
   startGame: function() {
     //ask user to start the game, then start if yes
-    AskThenStart();
+    this.currentWordObj = new Word(this.wordBank[Math.floor(Math.random()* this.wordBank.length)]);
+    AskThenStart(this.currentWordObj);
   }
 };
 
-var currentWordObj = new Word(game.wordBank[Math.floor(Math.random() * game.wordBank.length)]);
-
-function InquireLetter() {
+function InquireLetter(currentWordObj) {
   if (game.numberOfguesses > 0) {
     inquirer
       .prompt([
@@ -87,7 +86,7 @@ function InquireLetter() {
   }
 }
 
-function AskThenStart() {
+function AskThenStart(currentWordObj) {
   inquirer
     .prompt([
       {
@@ -99,10 +98,10 @@ function AskThenStart() {
     .then(function(inquirerResponse) {
       if (inquirerResponse.Gamestart) {
         currentWordObj.displayWord();
-        InquireLetter();
+        InquireLetter(currentWordObj);
       } else {
         console.log(`Let me know when you're ready to play..`);
-        AskThenStart();
+        AskThenStart(currentWordObj);
       }
     });
 }
@@ -114,5 +113,6 @@ function AskThenStart() {
 // }
 
 // keepGuessing();
+// var currentWordObj = new Word(game.wordBank[Math.floor(Math.random() * game.wordBank.length)]);
 
 game.startGame();
