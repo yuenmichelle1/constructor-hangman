@@ -14,7 +14,6 @@ function Word(word) {
   };
   this.checkGuess = function(guess) {
     this.letterObjArray.forEach(letterObj => letterObj.checkLetter(guess));
-    this.displayWord();
   };
 }
 
