@@ -13,16 +13,14 @@ function Word(word) {
     return dashedWord;
   };
   this.checkGuess = function(guess) {
-    for (var i = 0; i < this.letterObjArray.length; i++) {
-      this.letterObjArray[i].checkLetter(guess);
-    }
+    this.letterObjArray.forEach(letterObj => letterObj.checkLetter(guess));
     this.displayWord();
   };
 }
 
-var foo = new Word("Monkey");
-foo.displayWord();
-// // foo.checkGuess("u");
+// var foo = new Word("Monkey");
+// // foo.displayWord();
+// foo.checkGuess("m");
 // console.log(foo.CreateletterObjArr());
 
 module.exports = Word;

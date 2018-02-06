@@ -5,7 +5,7 @@ function Letter(letter, isGuessed) {
     if (this.isGuessed) {
       return this.letter;
     } else {
-      return `-`;
+      return `_`;
     }
   };
   this.checkLetter = function(guess) {
