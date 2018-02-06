@@ -1,33 +1,8 @@
 var Word = require("./Word.js");
 var inquirer = require("inquirer");
-var alphabet = [
-  `A`,
-  `B`,
-  `C`,
-  `D`,
-  `E`,
-  `F`,
-  `G`,
-  `H`,
-  `I`,
-  `J`,
-  `K`,
-  `L`,
-  `M`,
-  `N`,
-  `O`,
-  `P`,
-  `Q`,
-  `R`,
-  `S`,
-  `T`,
-  `U`,
-  `V`,
-  `W`,
-  `X`,
-  `Y`,
-  `Z`
-];
+var alphabet = [`A`,`B`,`C`, `D`,`E`,`F`,`G`, `H`,`I`,`J`,`K`,`L`,`M`,`N`,`O`,`P`,`Q`,`R`, `S`,`T`,`U`, `V`, `W`,`X`,`Y`,`Z`];
+
+var currentWordObj = new Word(game.wordBank[Math.floor(Math.random() * game.wordBank.length)]);
 
 var game = {
   wordBank: [
@@ -48,13 +23,13 @@ var game = {
   wins: 0,
   losses: 0,
   numberOfguesses: 8,
-  wrongGuesses: []
+  wrongGuesses: [],
+  startGame: function() {
+    //ask user to start the game, then start if yes
+    AskThenStart();
+  }
 };
 
-var currentWordObj = new Word(
-  game.wordBank[Math.floor(Math.random() * game.wordBank.length)]
-);
-currentWordObj.displayWord();
 
 function InquireLetter() {
   inquirer
@@ -67,7 +42,6 @@ function InquireLetter() {
     ])
     .then(function(inquirerResponse) {
       console.log(`you guessed ${inquirerResponse.userGuess}`);
-      // //check if userGuess is a letter (i.e. not a symbol and not more than length 1)
       if (
         inquirerResponse.userGuess.length === 1 &&
         alphabet.includes(inquirerResponse.userGuess.toUpperCase())
@@ -84,6 +58,26 @@ function InquireLetter() {
     });
 }
 
+function AskThenStart() {
+  inquirer
+    .prompt([
+      {
+        type: "confirm",
+        message: "Do you want to start a game of Hangman (Superhero Edition)?",
+        name: "Gamestart"
+      }
+    ])
+    .then(function(inquirerResponse) {
+      if (inquirerResponse.Gamestart) {
+        currentWordObj.displayWord();
+        InquireLetter();
+      } else {
+        console.log(`Let me know when you're ready to play..`);
+        AskThenStart();
+      }
+    });
+}
+
 // function keepGuessing() {
 //   while (currentWordObj.displayWord().includes(`-`) || numberOfguesses === 0) {
 //     InquireLetter();
@@ -91,4 +85,5 @@ function InquireLetter() {
 // }
 
 // keepGuessing();
-InquireLetter();
+
+game.startGame();
