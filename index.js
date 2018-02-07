@@ -1,7 +1,10 @@
+
+
 var Word = require("./Word.js");
 var inquirer = require("inquirer");
 var alphabet = [`A`,`B`,`C`, `D`,`E`,`F`,`G`, `H`,`I`,`J`,`K`,`L`,`M`,`N`,`O`,`P`,`Q`,`R`, `S`,`T`,`U`, `V`, `W`,`X`,`Y`,`Z`];
 var userGuess;
+var currentWordObj = null;
 //add an empty array letters used later
 var game = {
   wordBank: [
@@ -27,17 +30,22 @@ var game = {
   startGame: function() {
     //ask user to start the game, then start if yes
     this.resetSettings();
-    this.currentWordObj = new Word(this.wordBank[Math.floor(Math.random()* this.wordBank.length)]);
     AskThenStart(this.currentWordObj);
   },
   resetSettings: function(){
     this.numberOfguesses = 8;
     this.wrongGuesses =[];
     this.dashesOrletters = "";
+    currentWordObj = null;
+    this.createNewWordObj();
+  },
+  createNewWordObj: function(){
+    currentWordObj= new Word(this.wordBank[Math.floor(Math.random()* this.wordBank.length)]);
   }
 };
 
-function InquireLetter(currentWordObj) {
+
+function InquireLetter() {
   game.dashesOrletters = currentWordObj.displayWord();
   if (game.numberOfguesses > 0 && game.dashesOrletters.includes(`_`)) {
     inquirer
@@ -50,24 +58,26 @@ function InquireLetter(currentWordObj) {
       ])
       .then(function(inquirerResponse) {
         userGuess= inquirerResponse.userGuess;
-        console.log(`Correct! you guessed ${userGuess}`);
+        console.log(`You guessed ${userGuess}`);
         if (
           userGuess.length === 1 &&
           alphabet.includes(userGuess.toUpperCase())
         ) {
           currentWordObj.checkGuess(userGuess);
-          pushWrongGuess(currentWordObj);
+          pushWrongGuess();
         } else {
           console.log(
             `${userGuess} is not a valid input. Please guess a letter`
           );
         }
-        InquireLetter(currentWordObj);
+        InquireLetter();
       });
+  } else if (game.numberOfguesses === 0){
+    displayWhenLoss();
   }
 }
 
-function AskThenStart(currentWordObj) {
+function AskThenStart() {
   inquirer
     .prompt([
       {
@@ -78,27 +88,34 @@ function AskThenStart(currentWordObj) {
     ])
     .then(function(inquirerResponse) {
       if (inquirerResponse.Gamestart) {
-        InquireLetter(currentWordObj);
+        InquireLetter();
       } else {
         console.log(`Let me know when you're ready to play..`);
-        AskThenStart(currentWordObj);
+        AskThenStart();
       }
     });
 }
 
-function pushWrongGuess (currentWordObj) {
-  //if user guesses Wrong (i.e. isGuessed for every Letter Obj in array is false), then push userGuess
+function pushWrongGuess () {
   var wordLetterObjArr = currentWordObj.letterObjArray;
-  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter);
-  
+  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
   if (arrayOfWordLetters.indexOf(userGuess.toUpperCase()) === -1){
     game.wrongGuesses.push(userGuess.toUpperCase());
     game.numberOfguesses--;
     console.log(`Wrong! You have ${game.numberOfguesses} remaining`);
-  }
-  
+  } 
 }
 
-
+//displayCorrectAnswer when loss
+function displayWhenLoss () {
+  var wordLetterObjArr = currentWordObj.letterObjArray;
+  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
+  game.losses++;
+  console.log(`Correct Answer is ${arrayOfWordLetters.join('')}, \n Losses: ${game.losses} \n Wins: ${game.wins}`);
+  setTimeout(() => {
+    game.resetSettings();
+    InquireLetter();
+  }, 2000);
+}
 
 game.startGame();
