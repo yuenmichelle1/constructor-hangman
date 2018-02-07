@@ -45,8 +45,11 @@ var game = {
 };
 
 
+
 function InquireLetter() {
   game.dashesOrletters = currentWordObj.displayWord();
+  var wordLetterObjArr = currentWordObj.letterObjArray;
+  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
   if (game.numberOfguesses > 0 && game.dashesOrletters.includes(`_`)) {
     inquirer
       .prompt([
@@ -74,6 +77,8 @@ function InquireLetter() {
       });
   } else if (game.numberOfguesses === 0){
     displayWhenLoss();
+  } else if (wordLetterObjArr.every(checkEverythingCorrect) === true && game.numberOfguesses>0) {
+    displayWhenWin();
   }
 }
 
@@ -96,6 +101,11 @@ function AskThenStart() {
     });
 }
 
+// function createArraysforWordChecks (){
+// var wordLetterObjArr = currentWordObj.letterObjArray;
+// var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
+// }
+
 function pushWrongGuess () {
   var wordLetterObjArr = currentWordObj.letterObjArray;
   var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
@@ -108,14 +118,30 @@ function pushWrongGuess () {
 
 //displayCorrectAnswer when loss
 function displayWhenLoss () {
+  game.losses++;
+  replay();
+}
+
+function checkEverythingCorrect (Letter){
+  return (Letter.isGuessed === true);
+}
+
+function displayWhenWin () {
+  game.wins++;
+  console.log(`You win!`);
+  replay();
+}
+
+function replay (){
   var wordLetterObjArr = currentWordObj.letterObjArray;
   var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
-  game.losses++;
   console.log(`Correct Answer is ${arrayOfWordLetters.join('')}, \n Losses: ${game.losses} \n Wins: ${game.wins}`);
   setTimeout(() => {
     game.resetSettings();
     InquireLetter();
   }, 2000);
+
 }
+
 
 game.startGame();
