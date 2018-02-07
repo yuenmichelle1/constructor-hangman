@@ -41,19 +41,19 @@ function InquireLetter(currentWordObj) {
         }
       ])
       .then(function(inquirerResponse) {
-        console.log(`you guessed ${inquirerResponse.userGuess}`);
+        var userGuess= inquirerResponse.userGuess;
+        console.log(`you guessed ${userGuess}`);
         if (
-          inquirerResponse.userGuess.length === 1 &&
-          alphabet.includes(inquirerResponse.userGuess.toUpperCase())
+          userGuess.length === 1 &&
+          alphabet.includes(userGuess.toUpperCase())
         ) {
-          currentWordObj.checkGuess(inquirerResponse.userGuess);
-          InquireLetter(currentWordObj);
+          currentWordObj.checkGuess(userGuess);
         } else {
           console.log(
-            `${inquirerResponse.userGuess} is not a valid input. Please guess a letter`
+            `${userGuess} is not a valid input. Please guess a letter`
           );
-          InquireLetter(currentWordObj);
         }
+        InquireLetter(currentWordObj);
       });
   }
 }
