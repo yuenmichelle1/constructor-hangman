@@ -101,10 +101,6 @@ function AskThenStart() {
     });
 }
 
-// function createArraysforWordChecks (){
-// var wordLetterObjArr = currentWordObj.letterObjArray;
-// var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
-// }
 
 function pushWrongGuess () {
   var wordLetterObjArr = currentWordObj.letterObjArray;
@@ -112,7 +108,7 @@ function pushWrongGuess () {
   if (arrayOfWordLetters.indexOf(userGuess.toUpperCase()) === -1){
     game.wrongGuesses.push(userGuess.toUpperCase());
     game.numberOfguesses--;
-    console.log(`Wrong! You have ${game.numberOfguesses} remaining`);
+    console.log(`Wrong! You have ${game.numberOfguesses} incorrect attempts remaining`);
   } 
 }
 
