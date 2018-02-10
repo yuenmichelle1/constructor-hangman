@@ -15,7 +15,15 @@ var wordBank = [
     `Captain America`,
     `Iron Man`, 
     `Ant Man`, 
-    `Doctor Strange`
+    `Doctor Strange`,
+    `Jessica Jones`,
+    `Black Widow`, 
+    `Deadpool`, 
+    `Black Panther`,
+    `Cyclops`, 
+    `Hawkeye`, 
+    `Invisible Woman`, 
+    `Starfire`
   ];
   
 var alphabet = [`A`,`B`,`C`,`D`,`E`,`F`,`G`,`H`,`I`,`J`,`K`,`L`, `M`,`N`,`O`,`P`,`Q`,`R`,`S`,`T`,`U`,`V`,`W`,`X`,`Y`,`Z`];

@@ -12,9 +12,7 @@ function Word(word) {
   };
   this.letterObjArray = this.CreateletterObjArr();
   this.displayWord = function() {
-    var dashedWord = this.letterObjArray
-      .map(letterObj => letterObj.placeholder())
-      .join(" ");
+    var dashedWord = this.letterObjArray.map(letterObj => letterObj.placeholder()).join(" ");
     console.log(dashedWord);
     return dashedWord;
   };
