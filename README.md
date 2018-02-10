@@ -1,6 +1,6 @@
 # constructor-hangman
 
-###Overview
+### Overview
 Command-line hangman game using constructor functions, `Node.js` and `inquirer`. All words are names of  superheroes. 
 
 ## How to Play
