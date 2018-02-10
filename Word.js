@@ -2,13 +2,23 @@ var Letter = require("./Letter.js");
 
 function Word(word) {
   this.CreateletterObjArr = function() {
+    //split word into array of letters
     var wordArray = word.split("");
+    //create new array of new letter objects
     var letterObjArr = wordArray.map(letter => new Letter(letter, false));
+    //if the word is >1 word phrase, find the index of the letter object of the " " and change its boolean to True so game will not check for the " "
+    for (var i = 0; i < letterObjArr.length; i++) {
+      if (letterObjArr[i].letter === " ") {
+        letterObjArr[i].isGuessed = true;
+      }
+    }
     return letterObjArr;
   };
   this.letterObjArray = this.CreateletterObjArr();
   this.displayWord = function() {
-    var dashedWord = this.letterObjArray.map(letterObj => letterObj.placeholder()).join(" ");
+    var dashedWord = this.letterObjArray
+      .map(letterObj => letterObj.placeholder())
+      .join(" ");
     console.log(dashedWord);
     return dashedWord;
   };

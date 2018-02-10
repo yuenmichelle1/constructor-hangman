@@ -1,52 +1,12 @@
 var Word = require("./Word.js");
 var inquirer = require("inquirer");
-var alphabet = [
-  `A`,
-  `B`,
-  `C`,
-  `D`,
-  `E`,
-  `F`,
-  `G`,
-  `H`,
-  `I`,
-  `J`,
-  `K`,
-  `L`,
-  `M`,
-  `N`,
-  `O`,
-  `P`,
-  `Q`,
-  `R`,
-  `S`,
-  `T`,
-  `U`,
-  `V`,
-  `W`,
-  `X`,
-  `Y`,
-  `Z`
-];
+var wordBank = require("./wordBank");
+var alphabet = [`A`,`B`,`C`,`D`,`E`,`F`,`G`,`H`,`I`,`J`,`K`,`L`, `M`,`N`,`O`,`P`,`Q`,`R`,`S`,`T`,`U`,`V`,`W`,`X`,`Y`,`Z`];
 var userGuess;
 var currentWordObj = null;
 //add an empty array letters used later
 var game = {
-  wordBank: [
-    `Thor`,
-    `Spiderman`,
-    `Batman`,
-    `Superman`,
-    `Flash`,
-    `Wonderwoman`,
-    `Aquaman`,
-    `Daredevil`,
-    `Hulk`,
-    `Thing`,
-    `Wolverine`,
-    `Supergirl`,
-    `Cyborg`
-  ],
+  wordBank: wordBank,
   wins: 0,
   losses: 0,
   numberOfguesses: 8,
@@ -103,7 +63,11 @@ function InquireLetter() {
 }
 
 function checkIfLetter(guess) {
-  if (guess.length === 1 && alphabet.includes(guess.toUpperCase()) && game.usedLetters.includes(guess.toUpperCase()) === false) {
+  if (
+    guess.length === 1 &&
+    alphabet.includes(guess.toUpperCase()) &&
+    game.usedLetters.includes(guess.toUpperCase()) === false
+  ) {
     currentWordObj.checkGuess(guess);
     game.usedLetters.push(guess.toUpperCase());
     pushWrongGuess();
@@ -147,7 +111,7 @@ function pushWrongGuess() {
     console.log(
       `Wrong! You have ${game.numberOfguesses} incorrect attempts remaining`
     );
-  } 
+  }
 }
 
 //displayCorrectAnswer when loss
