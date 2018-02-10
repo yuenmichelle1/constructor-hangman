@@ -129,11 +129,7 @@ function displayWhenWin() {
 
 function replay() {
   arrayOfWordLetters = defineCheckVars();
-  console.log(
-    `Correct Answer is ${arrayOfWordLetters.join("")}, \n Losses: ${
-      game.losses
-    } \n Wins: ${game.wins}`
-  );
+  console.log(`Correct Answer is ${arrayOfWordLetters.join("")}, \n Losses: ${game.losses} \n Wins: ${game.wins}`);
   game.resetSettings();
   InquireLetter();
 }
