@@ -7,11 +7,7 @@ function Word(word) {
     //create new array of new letter objects
     var letterObjArr = wordArray.map(letter => new Letter(letter, false));
     //if the word is >1 word phrase, find the index of the letter object of the " " and change its boolean to True so game will not check for the " "
-    for (var i = 0; i < letterObjArr.length; i++) {
-      if (letterObjArr[i].letter === " ") {
-        letterObjArr[i].isGuessed = true;
-      }
-    }
+    letterObjArr.forEach(letterObj => spacesLogic(letterObj));
     return letterObjArr;
   };
   this.letterObjArray = this.CreateletterObjArr();
@@ -26,5 +22,13 @@ function Word(word) {
     this.letterObjArray.forEach(letterObj => letterObj.checkLetter(guess));
   };
 }
+
+//if the object Letter's letter value is a space then change isGuessed to True
+function spacesLogic(obj) {
+  if (obj.letter === " "){
+    obj.isGuessed= true;
+  }
+} 
+
 
 module.exports = Word;
