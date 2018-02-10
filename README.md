@@ -3,7 +3,7 @@
 ### Overview
 Command-line hangman game using constructor functions, `Node.js` and `inquirer`. All words are names of  superheroes. 
 
-## How to Play
+### How to Play
 * Initialize game using command `node index`
 * You will be asked whether or not you want to start the game, if `y` game starts
 ![Step One](Step1.gif)
