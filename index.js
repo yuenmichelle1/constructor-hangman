@@ -1,12 +1,12 @@
 var Word = require("./Word.js");
 var inquirer = require("inquirer");
-var wordBank = require("./wordBank");
-var alphabet = [`A`,`B`,`C`,`D`,`E`,`F`,`G`,`H`,`I`,`J`,`K`,`L`, `M`,`N`,`O`,`P`,`Q`,`R`,`S`,`T`,`U`,`V`,`W`,`X`,`Y`,`Z`];
+var grabwordBank = require("./wordBank");
+var alphabet = grabwordBank.alphabet;
 var userGuess;
 var currentWordObj = null;
 //add an empty array letters used later
 var game = {
-  wordBank: wordBank,
+  wordBank: grabwordBank.wordBank,
   wins: 0,
   losses: 0,
   numberOfguesses: 8,
