@@ -1,7 +1,7 @@
 var Letter = require("./Letter.js");
 
 function Word(word) {
-  this.CreateletterObjArr = function() {
+  this.createLetterObjArr = function() {
     //split word into array of letters
     var wordArray = word.split("");
     //create new array of new letter objects
@@ -10,7 +10,7 @@ function Word(word) {
     letterObjArr.forEach(letterObj => spacesLogic(letterObj));
     return letterObjArr;
   };
-  this.letterObjArray = this.CreateletterObjArr();
+  this.letterObjArray = this.createLetterObjArr();
   this.displayWord = function() {
     var dashedWord = this.letterObjArray.map(letterObj => letterObj.placeholder()).join(" ");
     console.log(dashedWord);

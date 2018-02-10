@@ -63,11 +63,7 @@ function InquireLetter() {
 }
 
 function checkIfLetter(guess) {
-  if (
-    guess.length === 1 &&
-    alphabet.includes(guess.toUpperCase()) &&
-    game.usedLetters.includes(guess.toUpperCase()) === false
-  ) {
+  if (guess.length === 1 && alphabet.includes(guess.toUpperCase()) && game.usedLetters.includes(guess.toUpperCase()) === false) {
     currentWordObj.checkGuess(guess);
     game.usedLetters.push(guess.toUpperCase());
     pushWrongGuess();
