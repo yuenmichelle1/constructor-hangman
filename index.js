@@ -51,6 +51,7 @@ var game = {
   losses: 0,
   numberOfguesses: 8,
   wrongGuesses: [],
+  usedLetters: [],
   dashesOrletters: "",
   startGame: function() {
     //ask user to start the game, then start if yes
@@ -60,6 +61,7 @@ var game = {
   resetSettings: function() {
     this.numberOfguesses = 8;
     this.wrongGuesses = [];
+    this.usedLetters = [];
     this.dashesOrletters = "";
     currentWordObj = null;
     this.createNewWordObj();
@@ -87,17 +89,7 @@ function InquireLetter() {
       .then(function(inquirerResponse) {
         userGuess = inquirerResponse.userGuess;
         console.log(`You guessed ${userGuess}`);
-        if (
-          userGuess.length === 1 &&
-          alphabet.includes(userGuess.toUpperCase())
-        ) {
-          currentWordObj.checkGuess(userGuess);
-          pushWrongGuess();
-        } else {
-          console.log(
-            `${userGuess} is not a valid input. Please guess a letter`
-          );
-        }
+        checkIfLetter(userGuess);
         InquireLetter();
       });
   } else if (game.numberOfguesses === 0) {
@@ -107,6 +99,18 @@ function InquireLetter() {
     game.numberOfguesses > 0
   ) {
     displayWhenWin();
+  }
+}
+
+function checkIfLetter(guess) {
+  if (guess.length === 1 && alphabet.includes(guess.toUpperCase()) && game.usedLetters.includes(guess.toUpperCase()) === false) {
+    currentWordObj.checkGuess(guess);
+    game.usedLetters.push(guess.toUpperCase());
+    pushWrongGuess();
+  } else if (game.usedLetters.includes(guess.toUpperCase())) {
+    console.log(`You have already guessed ${guess}. Pick a different letter`);
+  } else {
+    console.log(`${guess} is not a valid input. Please guess a letter`);
   }
 }
 
@@ -143,11 +147,12 @@ function pushWrongGuess() {
     console.log(
       `Wrong! You have ${game.numberOfguesses} incorrect attempts remaining`
     );
-  }
+  } 
 }
 
 //displayCorrectAnswer when loss
 function displayWhenLoss() {
+  console.log(`Sorry, you lost that game`);
   game.losses++;
   replay();
 }
@@ -164,7 +169,11 @@ function displayWhenWin() {
 
 function replay() {
   arrayOfWordLetters = defineCheckVars();
-  console.log(`Correct Answer is ${arrayOfWordLetters.join("")}, \n Losses: ${game.losses} \n Wins: ${game.wins}`);
+  console.log(
+    `Correct Answer is ${arrayOfWordLetters.join("")}, \n Losses: ${
+      game.losses
+    } \n Wins: ${game.wins}`
+  );
   game.resetSettings();
   InquireLetter();
 }
