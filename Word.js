@@ -17,9 +17,4 @@ function Word(word) {
   };
 }
 
-// var foo = new Word("Monkey");
-// // foo.displayWord();
-// foo.checkGuess("m");
-// console.log(foo.CreateletterObjArr());
-
 module.exports = Word;

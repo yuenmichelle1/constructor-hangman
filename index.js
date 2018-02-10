@@ -1,8 +1,33 @@
-
-
 var Word = require("./Word.js");
 var inquirer = require("inquirer");
-var alphabet = [`A`,`B`,`C`, `D`,`E`,`F`,`G`, `H`,`I`,`J`,`K`,`L`,`M`,`N`,`O`,`P`,`Q`,`R`, `S`,`T`,`U`, `V`, `W`,`X`,`Y`,`Z`];
+var alphabet = [
+  `A`,
+  `B`,
+  `C`,
+  `D`,
+  `E`,
+  `F`,
+  `G`,
+  `H`,
+  `I`,
+  `J`,
+  `K`,
+  `L`,
+  `M`,
+  `N`,
+  `O`,
+  `P`,
+  `Q`,
+  `R`,
+  `S`,
+  `T`,
+  `U`,
+  `V`,
+  `W`,
+  `X`,
+  `Y`,
+  `Z`
+];
 var userGuess;
 var currentWordObj = null;
 //add an empty array letters used later
@@ -32,24 +57,24 @@ var game = {
     this.resetSettings();
     AskThenStart(this.currentWordObj);
   },
-  resetSettings: function(){
+  resetSettings: function() {
     this.numberOfguesses = 8;
-    this.wrongGuesses =[];
+    this.wrongGuesses = [];
     this.dashesOrletters = "";
     currentWordObj = null;
     this.createNewWordObj();
   },
-  createNewWordObj: function(){
-    currentWordObj= new Word(this.wordBank[Math.floor(Math.random()* this.wordBank.length)]);
+  createNewWordObj: function() {
+    currentWordObj = new Word(
+      this.wordBank[Math.floor(Math.random() * this.wordBank.length)]
+    );
   }
 };
-
-
 
 function InquireLetter() {
   game.dashesOrletters = currentWordObj.displayWord();
   var wordLetterObjArr = currentWordObj.letterObjArray;
-  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
+  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter);
   if (game.numberOfguesses > 0 && game.dashesOrletters.includes(`_`)) {
     inquirer
       .prompt([
@@ -60,7 +85,7 @@ function InquireLetter() {
         }
       ])
       .then(function(inquirerResponse) {
-        userGuess= inquirerResponse.userGuess;
+        userGuess = inquirerResponse.userGuess;
         console.log(`You guessed ${userGuess}`);
         if (
           userGuess.length === 1 &&
@@ -75,9 +100,12 @@ function InquireLetter() {
         }
         InquireLetter();
       });
-  } else if (game.numberOfguesses === 0){
+  } else if (game.numberOfguesses === 0) {
     displayWhenLoss();
-  } else if (wordLetterObjArr.every(checkEverythingCorrect) === true && game.numberOfguesses>0) {
+  } else if (
+    wordLetterObjArr.every(checkEverythingCorrect) === true &&
+    game.numberOfguesses > 0
+  ) {
     displayWhenWin();
   }
 }
@@ -101,43 +129,44 @@ function AskThenStart() {
     });
 }
 
-
-function pushWrongGuess () {
+function defineCheckVars() {
   var wordLetterObjArr = currentWordObj.letterObjArray;
-  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
-  if (arrayOfWordLetters.indexOf(userGuess.toUpperCase()) === -1){
+  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter);
+  return arrayOfWordLetters;
+}
+
+function pushWrongGuess() {
+  arrayOfWordLetters = defineCheckVars();
+  if (arrayOfWordLetters.indexOf(userGuess.toUpperCase()) === -1) {
     game.wrongGuesses.push(userGuess.toUpperCase());
     game.numberOfguesses--;
-    console.log(`Wrong! You have ${game.numberOfguesses} incorrect attempts remaining`);
-  } 
+    console.log(
+      `Wrong! You have ${game.numberOfguesses} incorrect attempts remaining`
+    );
+  }
 }
 
 //displayCorrectAnswer when loss
-function displayWhenLoss () {
+function displayWhenLoss() {
   game.losses++;
   replay();
 }
 
-function checkEverythingCorrect (Letter){
-  return (Letter.isGuessed === true);
+function checkEverythingCorrect(Letter) {
+  return Letter.isGuessed === true;
 }
 
-function displayWhenWin () {
+function displayWhenWin() {
   game.wins++;
   console.log(`You win!`);
   replay();
 }
 
-function replay (){
-  var wordLetterObjArr = currentWordObj.letterObjArray;
-  var arrayOfWordLetters = wordLetterObjArr.map(Letter => Letter.letter); 
-  console.log(`Correct Answer is ${arrayOfWordLetters.join('')}, \n Losses: ${game.losses} \n Wins: ${game.wins}`);
-  setTimeout(() => {
-    game.resetSettings();
-    InquireLetter();
-  }, 2000);
-
+function replay() {
+  arrayOfWordLetters = defineCheckVars();
+  console.log(`Correct Answer is ${arrayOfWordLetters.join("")}, \n Losses: ${game.losses} \n Wins: ${game.wins}`);
+  game.resetSettings();
+  InquireLetter();
 }
-
 
 game.startGame();
