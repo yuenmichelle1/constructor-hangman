@@ -3,7 +3,7 @@ var inquirer = require("inquirer");
 var grabwordBank = require("./wordBank");
 var alphabet = grabwordBank.alphabet;
 var userGuess;
-var currentWordObj = null;
+var currentWordObj;
 //add an empty array letters used later
 var game = {
   wordBank: grabwordBank.wordBank,
