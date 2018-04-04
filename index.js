@@ -124,7 +124,7 @@ var game = {
           game.inquireLetter();
         } else {
           console.log(`Let me know when you're ready to play..`);
-          this.askThenStart();
+          game.askThenStart();
         }
       });
   }
